@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">MyCityApp</string>
+    <string name="back_button">Back</string>
+
+    <string name="category1">Category 1</string>
+    <string name="category2">Category 2</string>
+    <string name="category3">Category 3</string>
+    <string name="category4">Category 4</string>
+    <string name="category5">Category 5</string>
+
+    <string name="recommendation1">Recommendation 1</string>
+    <string name="recommendation2">Recommendation 2</string>
+    <string name="recommendation3">Recommendation 3</string>
+    <string name="recommendation4">Recommendation 4</string>
+    <string name="recommendation5">Recommendation 5</string>
+    <string name="recommendation6">Recommendation 6</string>
+    <string name="recommendation7">Recommendation 7</string>
+    <string name="recommendation8">Recommendation 8</string>
+    <string name="recommendation9">Recommendation 9</string>
+    <string name="recommendation10">Recommendation 10</string>
+    <string name="recommendation11">Recommendation 11</string>
+    <string name="recommendation12">Recommendation 12</string>
+    <string name="recommendation13">Recommendation 13</string>
+
+    <string name="place"> One of the most stunning places on Earth is the Maldives,
+        an archipelago in the Indian Ocean. Envision this: crystalline turquoise waters
+        so clear they almost appear surreal, lapping gently against the white sandy shores.
+        The islands are a mix of serene palm-fringed beaches and vibrant coral reefs teeming
+        with colorful marine life, making it a paradise for both relaxation and adventure. </string>
 </resources>
