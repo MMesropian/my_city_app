@@ -11,7 +11,7 @@ import com.example.mycityapp.model.MenuItem
 @Composable
 fun RecommendationScreen(
     recommendationList: List<MenuItem.Recommendation>,
-    onRecommendationClick: () -> Unit,
+    onRecommendationClick: (MenuItem) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     modifier: Modifier = Modifier,
 ) {

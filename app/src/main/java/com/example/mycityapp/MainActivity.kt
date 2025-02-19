@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import com.example.mycityapp.ui.ExpandedScreen
 import com.example.mycityapp.ui.theme.MyCityAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyCityAppTheme {
                 val windowSize = calculateWindowSizeClass(this)
-                MyCityApp(windowSize = windowSize)
+                MyCityApp(windowSize = windowSize.widthSizeClass)
             }
         }
     }

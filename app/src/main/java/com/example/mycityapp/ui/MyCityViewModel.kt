@@ -15,18 +15,21 @@ class MyCityViewModel : ViewModel() {
         _uiState.update {
             it.copy(currentCategory = selectedCategory)
         }
+        //Log.d("Michael", "updateCategory ${uiState.value.currentCategory. }")
     }
 
     fun updateRecommendation(selectedRecommendation: MenuItem.Recommendation) {
         _uiState.update {
             it.copy(currentRecommendation = selectedRecommendation)
         }
+        //Log.d("Michael", "updateRecommendation ${(uiState.value.currentRecommendation.categoryID)}")
     }
 
     fun updatePlace(selectedPlace: MenuItem.Place) {
         _uiState.update {
             it.copy(currentPlace = selectedPlace)
         }
+        //Log.d("Michael", "updatePlace ${uiState.value.currentRecommendation.title.toString()}")
     }
 
 }

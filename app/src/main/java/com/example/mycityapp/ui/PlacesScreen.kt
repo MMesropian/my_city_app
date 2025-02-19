@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,11 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mycityapp.R
 import com.example.mycityapp.data.DataSource
-import com.example.mycityapp.model.Place
+import com.example.mycityapp.model.MenuItem
+
 
 @Composable
 fun PlacesScreen(
-    place: Place,
+    place: MenuItem.Place,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -37,6 +39,10 @@ fun PlacesScreen(
             )
         }
         Spacer(modifier = modifier.height(dimensionResource(R.dimen.padding_spacer)))
+        Text(
+            text = place.recommendationID.toString(),
+            style = MaterialTheme.typography.displayLarge
+        )
         Text(text = stringResource(place.text))
     }
 }

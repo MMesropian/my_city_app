@@ -26,15 +26,20 @@ fun ExpandedScreen(
     Row(modifier = modifier.padding(contentPadding)) {
         CategoryScreen(
             DataSource.category.toList(),
-            onCategoryClick = { viewModel.updateCategory() }
+            onCategoryClick = { viewModel.updateCategory(it as MenuItem.Category) },
+            modifier = modifier.weight(1f)
         )
         Spacer(modifier = Modifier.width(dimensionResource(R.dimen.padding_spacer)))
         RecommendationScreen(
-            DataSource.recommendation.toList(),
-            onRecommendationClick = { viewModel.updateRecommendation() }
+            DataSource.recommendation.toList().filter { it.categoryID == uiState.currentCategory.ID },
+            onRecommendationClick = { viewModel.updateRecommendation(it as MenuItem.Recommendation) },
+            modifier = modifier.weight(1f)
         )
         Spacer(modifier = Modifier.width(dimensionResource(R.dimen.padding_spacer)))
-        PlacesScreen(DataSource.places.first())
+        PlacesScreen(
+            DataSource.places.filter{ it.recommendationID == uiState.currentRecommendation.ID }.first(),
+            modifier = modifier.weight(1f)
+        )
     }
 }
 

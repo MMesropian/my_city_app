@@ -1,6 +1,8 @@
 package com.example.mycityapp
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,12 +21,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.mycityapp.data.DataSource
 import com.example.mycityapp.data.MyCityScreen
+import com.example.mycityapp.model.MenuItem
+import com.example.mycityapp.ui.CategoryScreen
 import com.example.mycityapp.ui.ExpandedScreen
 import com.example.mycityapp.ui.MyCityViewModel
+import com.example.mycityapp.ui.PlacesScreen
+import com.example.mycityapp.ui.RecommendationScreen
 import com.example.mycityapp.ui.utils.ContentType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,7 +68,7 @@ fun MyCityAppBar(
 
 @Composable
 fun MyCityApp(
-    windowSize: WindowSizeClass,
+    windowSize: WindowWidthSizeClass,
     navController: NavHostController = rememberNavController(),
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -68,6 +78,11 @@ fun MyCityApp(
 
     val viewModel: MyCityViewModel = viewModel()
     val uiState by viewModel.uiState.collectAsState()
+    val contentType = when (windowSize) {
+        WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium -> ContentType.ListOnly
+        WindowWidthSizeClass.Expanded -> ContentType.ListAndDetail
+        else -> ContentType.ListOnly
+    }
 
     Scaffold(
         topBar = {
@@ -81,37 +96,46 @@ fun MyCityApp(
 
     ) { innerPadding ->
 
-        ExpandedScreen(
-            viewModel = viewModel,
-            uiState = uiState,
-            contentPadding = innerPadding )
-        /*NavHost(
-            navController = navController,
-            startDestination = MyCityScreen.Category.name,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable(route = MyCityScreen.Category.name) {
-                CategoryScreen(
-                    DataSource.category.toList(),
-                    onCategoryClick = {
-                        navController.navigate(MyCityScreen.Recommendation.name)
-                    },
-                    //contentPadding = innerPadding
-                )
+        if (contentType == ContentType.ListAndDetail) {
+            ExpandedScreen(
+                viewModel = viewModel,
+                uiState = uiState,
+                contentPadding = innerPadding,
+                modifier = Modifier.fillMaxWidth()
+            )
+        } else {
+            NavHost(
+                navController = navController,
+                startDestination = MyCityScreen.Category.name,
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable(route = MyCityScreen.Category.name) {
+                    CategoryScreen(
+                        DataSource.category.toList(),
+                        onCategoryClick = {
+                            viewModel.updateCategory(it as MenuItem.Category)
+                            navController.navigate(MyCityScreen.Recommendation.name)
+                        },
+                        //contentPadding = innerPadding
+                    )
+                }
+                composable(route = MyCityScreen.Recommendation.name) {
+                    RecommendationScreen(
+                        DataSource.recommendation.toList().filter { it.categoryID == uiState.currentCategory.ID },
+                        onRecommendationClick = {
+                            viewModel.updateRecommendation(it as MenuItem.Recommendation)
+                            navController.navigate(MyCityScreen.Place.name)
+                        },
+                        //contentPadding = innerPadding
+                    )
+                }
+                composable(route = MyCityScreen.Place.name) {
+                    PlacesScreen(DataSource.places.filter{ it.recommendationID == uiState.currentRecommendation.ID }.first())
+                }
             }
-            composable(route = MyCityScreen.Recommendation.name) {
-                RecommendationScreen(
-                    DataSource.recommendation.toList(),
-                    onRecommendationClick = {
-                        navController.navigate(MyCityScreen.Place.name)
-                    },
-                    //contentPadding = innerPadding
-                )
-            }
-            composable(route = MyCityScreen.Place.name) {
-                PlacesScreen(DataSource.places.first())
-            }
-        }*/
+
+        }
+
 
     }
 }

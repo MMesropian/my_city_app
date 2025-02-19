@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -28,7 +27,7 @@ import com.example.mycityapp.model.MenuItem
 @Composable
 fun BaseScreen(
     options: List<MenuItem>,
-    onOptionClick: () -> Unit,
+    onOptionClick: (MenuItem) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     modifier: Modifier = Modifier,
 ) {
@@ -49,17 +48,18 @@ fun BaseScreen(
 @Composable
 fun BaseItem(
     item: MenuItem,
-    onClick: () -> Unit,
+    onClick: (MenuItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         elevation = CardDefaults.cardElevation(),
-        onClick = onClick,
+        onClick = { onClick(item) },
         modifier = modifier.padding(top = dimensionResource(id = R.dimen.padding_small))
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(dimensionResource(R.dimen.padding_medium))
                 .height(
                     dimensionResource(R.dimen.card_row_height)
